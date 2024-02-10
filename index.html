@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will you be my Valentine?</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Center the buttons horizontally */
+    .center {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    
+    /* Make buttons bigger */
+    .btn {
+      padding: 20px 30px;
+      font-size: 1.5rem;
+    }
+
+    /* Adjust image size */
+    .valentine-gif {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Center the second image */
+    .second-image-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 center">
+        <img src="https://imgs.search.brave.com/0Q0dhJ3Y9JYqp2bLPDl7HAtNErpqddZiB4Ud2tnt3fc/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9naWZk/Yi5jb20vaW1hZ2Vz/L2hpZ2gvcGVhY2gt/Y2F0LXdpbGwteW91/LWJlLW15LXZhbGVu/dGluZS1wd3YweDVi/M2FtdzB0NnU5Lmdp/Zg.gif">
+        <div class="mt-4">
+          <button id="yesButton" class="btn btn-success mb-3">Yes</button>
+          <button id="noButton" class="btn btn-danger mb-3" onmouseover="moveButton()">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  <script>
+    // Function to move the "No" button when cursor hovers over it
+    function moveButton() {
+      var button = document.getElementById('noButton');
+      var rect = button.getBoundingClientRect();
+      var newX = Math.random() * (window.innerWidth - rect.width);
+      var newY = Math.random() * (window.innerHeight - rect.height);
+      button.style.position = 'absolute';
+      button.style.left = newX + 'px';
+      button.style.top = newY + 'px';
+    }
+
+    // Event listener for "Yes" button
+    document.getElementById('yesButton').addEventListener('click', function(event) {
+      // Clear the screen
+      document.body.innerHTML = '';
+
+      // Add the new image
+      var newImage = document.createElement('img');
+      newImage.src = 'https://imgs.search.brave.com/Qf1YcEI-km5BxSW3q8G0YTZdotxZKUFGjk3jkFUoKQ8/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9naWZk/Yi5jb20vaW1hZ2Vz/L2hpZ2gvbG92ZS15/b3Utc28tbXVjaC1i/b21iLXdpdGgtaGVh/cnRzLWhpY29vNDcw/Y3J6d2FmcXEuZ2lm.gif';
+      newImage.classList.add('valentine-gif', 'second-image-container'); // Added 'second-image-container' class
+      document.body.appendChild(newImage);
+    });
+
+    // Prevent clicking on the "No" button
+    document.getElementById('noButton').addEventListener('click', function(event) {
+      event.preventDefault();
+    });
+  </script>
+</body>
+</html>
