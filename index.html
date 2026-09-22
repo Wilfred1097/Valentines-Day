@@ -3,86 +3,151 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Will you be my Valentine?</title>
-  <!-- Bootstrap CSS -->
+  <title>Will you be my Valentine? 💖</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
-    /* Center the buttons horizontally */
-    .center {
+    /* Overall Page Styling */
+    body {
+      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+      overflow: hidden;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* Container to center everything */
+    .center-flex {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      text-align: center;
     }
     
-    /* Make buttons bigger */
+    /* Make buttons larger and rounded */
     .btn {
-      padding: 15px 25px;
-      font-size: 1rem;
+      padding: 15px 40px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      border-radius: 50px;
+      margin: 10px;
+      transition: all 0.2s ease;
     }
 
-    /* Adjust image size */
+    .btn-success {
+      background-color: #28a745;
+      border-color: #28a745;
+    }
+
+    .btn-danger {
+      background-color: #dc3545;
+      border-color: #dc3545;
+      z-index: 10; /* Ensure it stays above other elements */
+    }
+
+    /* Adjust GIF size */
     .valentine-gif {
-      max-width: 100%;
+      max-width: 350px;
       height: auto;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
 
-    /* Center the second image */
-    .second-image-container {
+    /* Styling for the final celebration image */
+    .celebration-container {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .celebration-text {
+      font-size: 2rem;
+      color: #c82333;
+      font-weight: bold;
+      margin-top: 20px;
+      font-family: cursive;
     }
   </style>
 </head>
 <body>
-  <div class="container">
+
+  <div class="container" id="questionSection">
     <div class="row">
-      <div class="col-md-12 center">
+      <div class="col-md-12 center-flex">
         <img src="https://imgs.search.brave.com/0Q0dhJ3Y9JYqp2bLPDl7HAtNErpqddZiB4Ud2tnt3fc/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9naWZk/Yi5jb20vaW1hZ2Vz/L2hpZ2gvcGVhY2gt/Y2F0LXdpbGwteW91/LWJlLW15LXZhbGVu/dGluZS1wd3YweDVi/M2FtdzB0NnU5Lmdp/Zg.gif" class="valentine-gif" alt="Valentine's Day GIF">
-        <div class="mt-4">
-          <button id="yesButton" class="btn btn-success mb-3">Yes</button>
-          <button id="noButton" class="btn btn-danger mb-3" onmouseover="moveButton()">No</button>
+        <h1 class="mb-4" style="color: #333;">Will you be my Valentine?</h1>
+        
+        <div class="mt-3 position-relative" style="min-height: 100px;">
+          <button id="yesButton" class="btn btn-success">Yes</button>
+          <button id="noButton" class="btn btn-danger">No</button>
         </div>
+
       </div>
     </div>
   </div>
 
-  <!-- Bootstrap JS -->
+  <div id="celebrationSection" class="celebration-container" style="display: none;">
+    <img src="https://imgs.search.brave.com/Qf1YcEI-km5BxSW3q8G0YTZdotxZKUFGjk3jkFUoKQ8/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9naWZk/Yi5jb20vaW1hZ2Vz/L2hpZ2gvbG92ZS15/b3Utc28tbXVjaC1i/b21iLXdpdGgtaGVh/cnRzLWhpY29vNDcw/Y3J6d2FmcXEuZ2lm.gif" class="valentine-gif" alt="Happy Celebration GIF">
+    <div class="celebration-text">Yay! I Love you Always! ❤️</div>
+  </div>
+
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   
   <script>
-    // Function to move the "No" button when cursor hovers over it
+    const noButton = document.getElementById('noButton');
+    const yesButton = document.getElementById('yesButton');
+    const questionSection = document.getElementById('questionSection');
+    const celebrationSection = document.getElementById('celebrationSection');
+
+    // Function to move the "No" button randomly within screen bounds
     function moveButton() {
-      var button = document.getElementById('noButton');
-      var rect = button.getBoundingClientRect();
-      var newX = Math.random() * (window.innerWidth - rect.width);
-      var newY = Math.random() * (window.innerHeight - rect.height);
-      button.style.position = 'absolute';
-      button.style.left = newX + 'px';
-      button.style.top = newY + 'px';
+      // Ensure the button is set to fixed positioning to move outside normal flow
+      noButton.style.position = 'fixed';
+
+      // Get button dimensions
+      const btnWidth = noButton.offsetWidth;
+      const btnHeight = noButton.offsetHeight;
+
+      // Calculate available space (accounting for scrollbars and padding)
+      const maxWidth = window.innerWidth - btnWidth - 20; // 20px padding
+      const maxHeight = window.innerHeight - btnHeight - 20;
+
+      // Generate random coordinates within safe margins
+      const newX = Math.max(10, Math.random() * maxWidth);
+      const newY = Math.max(10, Math.random() * maxHeight);
+
+      // Apply new positions
+      noButton.style.left = newX + 'px';
+      noButton.style.top = newY + 'px';
     }
 
-    // Event listener for "Yes" button
-    document.getElementById('yesButton').addEventListener('click', function(event) {
-      // Clear the screen
-      document.body.innerHTML = '';
-
-      // Add the new image
-      var newImage = document.createElement('img');
-      newImage.src = 'https://imgs.search.brave.com/Qf1YcEI-km5BxSW3q8G0YTZdotxZKUFGjk3jkFUoKQ8/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9naWZk/Yi5jb20vaW1hZ2Vz/L2hpZ2gvbG92ZS15/b3Utc28tbXVjaC1i/b21iLXdpdGgtaGVh/cnRzLWhpY29vNDcw/Y3J6d2FmcXEuZ2lm.gif';
-      newImage.classList.add('valentine-gif', 'second-image-container'); // Added 'second-image-container' class
-      document.body.appendChild(newImage);
+    // Desktop: Move on hover
+    noButton.addEventListener('mouseover', moveButton);
+    // Mobile: Move on touchstart (tap)
+    noButton.addEventListener('touchstart', (e) => {
+      e.preventDefault(); // Prevent click from firing immediately
+      moveButton();
     });
 
-    // Prevent clicking on the "No" button
-    document.getElementById('noButton').addEventListener('click', function(event) {
+    // Prevent the "No" button from actually being clicked
+    noButton.addEventListener('click', function(event) {
       event.preventDefault();
     });
+
+    // Event listener for "Yes" button
+    yesButton.addEventListener('click', function() {
+      // Hide the question, show the celebration
+      questionSection.style.display = 'none';
+      celebrationSection.style.display = 'flex';
+    });
   </script>
+
 </body>
 </html>
